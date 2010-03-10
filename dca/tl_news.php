@@ -119,6 +119,11 @@ $GLOBALS['TL_DCA']['tl_news']['fields']['gal_fullsize'] = array
 	'eval'                    => array('tl_class'=>'w50'),
 );
 
+if (version_compare(VERSION, '2.7', '>'))
+{
+	$GLOBALS['TL_DCA']['tl_news']['fields']['sortBy']['options'][] = 'random';
+}
+
 
 
 class tl_news_gallery extends Backend

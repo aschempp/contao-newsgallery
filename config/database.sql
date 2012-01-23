@@ -21,3 +21,4 @@ CREATE TABLE `tl_news` (
   `gal_fullsize` char(1) NOT NULL default '',
   `gal_headline` varchar(255) NOT NULL default '',
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+

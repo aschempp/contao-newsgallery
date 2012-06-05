@@ -32,12 +32,18 @@ class NewsGallery extends ContentGallery
 
 	public function __construct($objTemplate) 
 	{
+		$this->import('Config');
+		$this->import('Input');
+		$this->import('Environment');
+		$this->import('Session');
+		$this->import('Database');
+
 		// Default values (not available in news gallery)
 		$this->useHomeDir = false;
 		$this->perPage = 0;
 		$this->id = $objTemplate->id;
-		$this->type = 'news_gallery';
-		
+		$this->type = 'news_gallery';		
+
 		// Apply news gallery settings
 		$arrHeadline = deserialize($objTemplate->gal_headline);
 		$this->headline = is_array($arrHeadline) ? $arrHeadline['value'] : $arrHeadline;
@@ -47,7 +53,9 @@ class NewsGallery extends ContentGallery
 		$this->perRow = $objTemplate->perRow;
 		$this->imagemargin = $objTemplate->gal_imagemargin;
 		$this->size = $objTemplate->gal_size;
-		$this->fullsize = $objTemplate->gal_fullsize;
+		$this->fullsize = $objTemplate->gal_fullsize;			
+		$this->numberOfItems = $objTemplate->numberOfItems;
+		$this->perPage = $objTemplate->perPage;	
 	}
 }
 

@@ -10,12 +10,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -37,7 +37,7 @@ $GLOBALS['TL_DCA']['tl_news']['list']['sorting']['child_record_callback'] = arra
  * Palettes
  */
 $GLOBALS['TL_DCA']['tl_news']['palettes']['__selector__'][]		= 'addGallery';
-$GLOBALS['TL_DCA']['tl_news']['subpalettes']['addGallery']		= 'gal_headline,multiSRC,gal_size,gal_imagemargin,perRow,perPage,numberOfItems,sortBy,gal_fullsize';
+$GLOBALS['TL_DCA']['tl_news']['subpalettes']['addGallery']		= 'gal_headline,multiSRC,gal_size,gal_imagemargin,perRow,gal_perPage,gal_numberOfItems,sortBy,gal_fullsize';
 foreach($GLOBALS['TL_DCA']['tl_news']['palettes'] as $k => $v)
 {
 	$GLOBALS['TL_DCA']['tl_news']['palettes'][$k] = str_replace('addImage;', 'addImage;{gallery_legend:hide},addGallery;', $GLOBALS['TL_DCA']['tl_news']['palettes'][$k]);
@@ -120,7 +120,7 @@ $GLOBALS['TL_DCA']['tl_news']['fields']['gal_fullsize'] = array
 	'eval'                    => array('tl_class'=>'w50'),
 );
 
-$GLOBALS['TL_DCA']['tl_news']['fields']['perPage'] = array
+$GLOBALS['TL_DCA']['tl_news']['fields']['gal_perPage'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['perPage'],
 	'exclude'                 => true,
@@ -128,7 +128,7 @@ $GLOBALS['TL_DCA']['tl_news']['fields']['perPage'] = array
 	'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50')
 );
 
-$GLOBALS['TL_DCA']['tl_news']['fields']['numberOfItems'] = array
+$GLOBALS['TL_DCA']['tl_news']['fields']['gal_numberOfItems'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['numberOfItems'],
 	'exclude'                 => true,
@@ -145,7 +145,7 @@ if (version_compare(VERSION, '2.7', '>'))
 
 class tl_news_gallery extends Backend
 {
-	
+
 	public function listNewsArticles($arrRow)
 	{
 		$key = $arrRow['published'] ? 'published' : 'unpublished';

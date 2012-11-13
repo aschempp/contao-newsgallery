@@ -10,12 +10,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -37,7 +37,7 @@ $GLOBALS['TL_DCA']['tl_news']['list']['sorting']['child_record_callback'] = arra
  * Palettes
  */
 $GLOBALS['TL_DCA']['tl_news']['palettes']['__selector__'][]		= 'addGallery';
-$GLOBALS['TL_DCA']['tl_news']['subpalettes']['addGallery']		= 'gal_headline,multiSRC,gal_size,gal_imagemargin,perRow,sortBy,gal_fullsize';
+$GLOBALS['TL_DCA']['tl_news']['subpalettes']['addGallery']		= 'gal_headline,multiSRC,gal_size,gal_imagemargin,perRow,gal_perPage,gal_numberOfItems,sortBy,gal_fullsize';
 foreach($GLOBALS['TL_DCA']['tl_news']['palettes'] as $k => $v)
 {
 	$GLOBALS['TL_DCA']['tl_news']['palettes'][$k] = str_replace('addImage;', 'addImage;{gallery_legend:hide},addGallery;', $GLOBALS['TL_DCA']['tl_news']['palettes'][$k]);
@@ -106,10 +106,10 @@ $GLOBALS['TL_DCA']['tl_news']['fields']['gal_size'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_news']['gal_size'],
 	'exclude'                 => true,
-	'inputType'               => (version_compare(VERSION, '2.8', '<') ? 'text' : 'imageSize'),
-	'options'                 => array('crop', 'proportional', 'box'),
+	'inputType'               => 'imageSize',
+	'options'                 => $GLOBALS['TL_CROP'],
 	'reference'               => &$GLOBALS['TL_LANG']['MSC'],
-	'eval'                    => array('multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'nospace'=>true, 'tl_class'=>'w50'),
+	'eval'                    => array('rgxp'=>'digit', 'nospace'=>true, 'tl_class'=>'w50'),
 );
 
 $GLOBALS['TL_DCA']['tl_news']['fields']['gal_fullsize'] = array
@@ -118,6 +118,22 @@ $GLOBALS['TL_DCA']['tl_news']['fields']['gal_fullsize'] = array
 	'exclude'                 => true,
 	'inputType'               => 'checkbox',
 	'eval'                    => array('tl_class'=>'w50'),
+);
+
+$GLOBALS['TL_DCA']['tl_news']['fields']['gal_perPage'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['perPage'],
+	'exclude'                 => true,
+	'inputType'               => 'text',
+	'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50')
+);
+
+$GLOBALS['TL_DCA']['tl_news']['fields']['gal_numberOfItems'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['numberOfItems'],
+	'exclude'                 => true,
+	'inputType'               => 'text',
+	'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50')
 );
 
 if (version_compare(VERSION, '2.7', '>'))
@@ -129,7 +145,7 @@ if (version_compare(VERSION, '2.7', '>'))
 
 class tl_news_gallery extends Backend
 {
-	
+
 	public function listNewsArticles($arrRow)
 	{
 		$key = $arrRow['published'] ? 'published' : 'unpublished';
